@@ -1,0 +1,13 @@
+{
+	"name": "1HymnADay",
+	"version": "0.0.1",
+	"author": "David Tien",
+	"description": "a twitter bot that tweets 1 song a day from hymnal.net",
+	"dependencies": {
+		"request-json": "0.4.6",
+		"twit": "1.1.12"
+	},
+	"engines": {
+		"node": "0.10.26"
+	}
+}
