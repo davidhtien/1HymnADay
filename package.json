@@ -9,12 +9,17 @@
 	},
 	"dependencies": {
 		"request": "2.33.0",
-		"twit": "1.1.12"
+		"twit": "1.1.12",
+		"express": "3.x"
 	},
 	"devDependencies": {
 		"nodemon": "1.0.15"
 	},
 	"engines": {
 		"node": "0.10.26"
+	},
+	"main": "hymnbot.js",
+	"scripts": {
+    	"start": "node hymnbot.js --websocket-port=$OPENSHIFT_NODEJS_PORT --log-level=1"
 	}
 }

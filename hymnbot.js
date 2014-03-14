@@ -1,5 +1,11 @@
 var Twit = require('twit');
 request = require('request');
+var app = require('express').createServer();
+
+app.get('/', function(req, res){
+    res.send('Hello world.');
+});
+app.listen(3000);
 
 var T = new Twit({
     consumer_key:         'H10n1pK0srAmOLpymYn0rg'
@@ -11,46 +17,50 @@ var T = new Twit({
 setInterval(function() {
 	var base = 'http://hymnal-api.herokuapp.com/';
     var categories = new Array('h/', 'ns/', 'c/');
-    //var category = categories[getRandomInt(0,2)];
-    var category = 'ns/';
+    var category = categories[getRandomInt(0,2)];
+    //var category = 'ns/';
 
-    if (category == 'h/') {
-    	var num = getRandomInt(1, 1348);
-    	var url = base + category + num.toString();
-    	//console.log(url);
-    	post(num, url, category);
-    } else if (category = 'ns/') {
-    	request(base + 'most_recent', function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                var data = JSON.parse(body);
-                //console.log(data);
-                var max = data["New Song"];
-                //console.log(max);
-                var num = getRandomInt(1, max);
-                var url = base + category + num.toString();
-                console.log(url);
-                post(num, url, category);
-            } else {
-                console.log(error);
-            };
-        });
-    } else {
-    	request(base + 'most_recent', function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                var data = JSON.parse(body);
-                //console.log(data);
-                var max = data["Children"];
-                //console.log(max);
-                var num = getRandomInt(1, max);
-                var url = base + category + num.toString();
-                post(num, url, category);
-            } else {
-                console.log(error);
-            };
-        });
+    try {
+        if (category == 'h/') {
+            var num = getRandomInt(1, 1348);
+            var url = base + category + num.toString();
+            //console.log(url);
+            post(num, url, category);
+        } else if (category = 'ns/') {
+            request(base + 'most_recent', function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var data = JSON.parse(body);
+                    //console.log(data);
+                    var max = data["New Song"];
+                    //console.log(max);
+                    var num = getRandomInt(1, max);
+                    var url = base + category + num.toString();
+                    console.log(url);
+                    post(num, url, category);
+                } else {
+                    console.log(error);
+                };
+            });
+        } else {
+            request(base + 'most_recent', function (error, response, body) {
+                if (!error && response.statusCode == 200) {
+                    var data = JSON.parse(body);
+                    //console.log(data);
+                    var max = data["Children"];
+                    //console.log(max);
+                    var num = getRandomInt(1, max);
+                    var url = base + category + num.toString();
+                    post(num, url, category);
+                } else {
+                    console.log(error);
+                };
+            });
+        }
+    } catch (err) {
+        console.log(err);
     }
 
-}, 86400000);
+}, 60000);
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
