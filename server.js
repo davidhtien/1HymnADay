@@ -87,12 +87,15 @@ function post(num, url, category) {
                 } else if (data["lyrics"]["nonum"] && length + data["lyrics"]["nonum"][i].length <= 140) {
                     length += data["lyrics"]["nonum"][i].length;
                     lyrics = lyrics + data["lyrics"]["nonum"][i] + "\n";
+                } else if (data["lyrics"]["chorus"] && length + data["lyrics"]["chorus"][i].length <= 140) {
+                    length += data["lyrics"]["chorus"][i].length;
+                    lyrics = lyrics + data["lyrics"]["chorus"][i] + "\n";
                 }
             }
 
-            console.log(lyrics.charAt(lyrics.length-2));
-            if (lyrics.charAt(lyrics.length-2) == ",") {
-                console.log(lyrics.charAt(lyrics.length-2));
+            var excess = lyrics.charAt(lyrics.length-2);
+            if ((excess == "," || excess == ";") || excess == ".") {
+                lyrics = lyrics.slice(0, lyrics.length-2) + "\n";
             }
 
             var tweet = lyrics + s_url;
