@@ -10,11 +10,11 @@ app.get('/', function(req, res){
     res.send('Hello world.');
 });
 
-/*
 app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
 });
-*/
+
+app.listen(3000);
 
 var T = new Twit({
     consumer_key:         'H10n1pK0srAmOLpymYn0rg'
@@ -67,8 +67,7 @@ setInterval(function() {
     } catch (err) {
         console.log(err);
     }
-
-}, 60000);
+}, 10000);
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -89,6 +88,11 @@ function post(num, url, category) {
                     length += data["lyrics"]["nonum"][i].length;
                     lyrics = lyrics + data["lyrics"]["nonum"][i] + "\n";
                 }
+            }
+
+            console.log(lyrics.charAt(lyrics.length-2));
+            if (lyrics.charAt(lyrics.length-2) == ",") {
+                console.log(lyrics.charAt(lyrics.length-2));
             }
 
             var tweet = lyrics + s_url;
