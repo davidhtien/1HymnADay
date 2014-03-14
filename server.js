@@ -10,9 +10,11 @@ app.get('/', function(req, res){
     res.send('Hello world.');
 });
 
+/*
 app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
 });
+*/
 
 var T = new Twit({
     consumer_key:         'H10n1pK0srAmOLpymYn0rg'
@@ -25,7 +27,6 @@ setInterval(function() {
 	var base = 'http://hymnal-api.herokuapp.com/';
     var categories = new Array('h/', 'ns/', 'c/');
     var category = categories[getRandomInt(0,2)];
-    //var category = 'ns/';
 
     try {
         if (category == 'h/') {
