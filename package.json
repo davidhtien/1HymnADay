@@ -18,8 +18,8 @@
 	"engines": {
 		"node": "0.10.26"
 	},
-	"main": "hymnbot.js",
 	"scripts": {
-    	"start": "node hymnbot.js --websocket-port=$OPENSHIFT_NODEJS_PORT --log-level=1"
-	}
+		"start": "node server.js"
+	},
+	"main": "server.js"
 }
