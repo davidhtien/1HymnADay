@@ -14,8 +14,6 @@ app.listen(server_port, server_ip_address, function () {
   console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
 });
 
-app.listen(3000);
-
 var T = new Twit({
     consumer_key:         'H10n1pK0srAmOLpymYn0rg'
   , consumer_secret:      'fPzrJJgnZRtUcojRhULVVerGcLaNPyKOXj9q15VoHTU'
@@ -67,7 +65,7 @@ setInterval(function() {
     } catch (err) {
         console.log(err);
     }
-}, 10000);
+}, 86400000);
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
