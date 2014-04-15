@@ -3,11 +3,17 @@ var express = require("express");
 var app = express();
 request = require('request');
 
-var server_port = process.env.OPENSHIFT_NODEJS_PORT || 8080
-var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+var server_port = 8080
+var server_ip_address = '127.0.0.1'
 
 app.get('/', function(req, res){
     res.send('Hello world.');
+});
+
+app.get('/tweet', function(req, res) {
+    res.send('tweeting one song')
+
+    tweet();
 });
 
 app.listen(server_port, server_ip_address, function () {
@@ -21,8 +27,20 @@ var T = new Twit({
   , access_token_secret:  'AHFAD68NZYTajEF3eaozlP2D5F7GL8iroSpiRnIX1nbJs'
 });
 
-setInterval(function() {
-	var base = 'http://hymnal-api.herokuapp.com/';
+var now = new Date();
+var msUntil2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14, 0, 0, 0) - now;
+if (msUntil2 < 0) {
+    msUntil2 += 86400000; // it's after 10am, try 10am tomorrow.
+}
+console.log("Time until tweet: " + msUntil2.toString() + "ms");
+
+setTimeout(function() {
+    tweet();
+    setInterval(tweet(), 86400000); 
+}, msUntil2);
+
+function tweet() {
+    var base = 'http://hymnal-api.herokuapp.com/';
     var categories = new Array('h/', 'ns/', 'c/');
     var category = categories[getRandomInt(0,2)];
 
@@ -65,11 +83,7 @@ setInterval(function() {
     } catch (err) {
         console.log(err);
     }
-}, 86400000);
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+}
 
 function post(num, url, category) {
     request(url, function (error, response, body) {
@@ -110,4 +124,8 @@ function post(num, url, category) {
             console.log(error);
         };
     });
-}
+};
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+};

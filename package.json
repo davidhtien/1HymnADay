@@ -3,6 +3,7 @@
 	"version": "0.0.1",
 	"author": "David Tien",
 	"description": "a twitter bot that tweets 1 song a day from hymnal.net",
+	"main": "server.js",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/davidhtien/1HymnADay.git"
@@ -16,10 +17,7 @@
 		"nodemon": "1.0.15"
 	},
 	"engines": {
-		"node": "0.10.26"
-	},
-	"scripts": {
-		"start": "node server.js"
-	},
-	"main": "server.js"
+		"node": "0.10.x",
+		"npm": "1.4.x"
+	}
 }
