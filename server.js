@@ -34,10 +34,9 @@ if (msUntil2 < 0) {
 }
 console.log("Time until tweet: " + msUntil2.toString() + "ms");
 
-setTimeout(function() {
-    tweet();
-    setInterval(tweet(), 86400000); 
-}, msUntil2);
+setInterval(function() {
+    setTimeout(tweet(), msUntil2);
+}, 86400000)
 
 function tweet() {
     var base = 'http://hymnal-api.herokuapp.com/';
