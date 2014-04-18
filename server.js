@@ -3,6 +3,15 @@ var express = require("express");
 var app = express();
 request = require('request');
 
+//Twitter config
+var T = new Twit({
+    consumer_key:         'H10n1pK0srAmOLpymYn0rg'
+  , consumer_secret:      'fPzrJJgnZRtUcojRhULVVerGcLaNPyKOXj9q15VoHTU'
+  , access_token:         '2357203652-ome6EWChcTqBB8LdTITRXolhaWKybmmQnHlwxaV'
+  , access_token_secret:  'AHFAD68NZYTajEF3eaozlP2D5F7GL8iroSpiRnIX1nbJs'
+});
+
+//server
 var server_port = 8080
 var server_ip_address = '127.0.0.1'
 
@@ -17,27 +26,29 @@ app.get('/tweet', function(req, res) {
 });
 
 app.listen(server_port, server_ip_address, function () {
-  console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
+    console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
 });
 
-var T = new Twit({
-    consumer_key:         'H10n1pK0srAmOLpymYn0rg'
-  , consumer_secret:      'fPzrJJgnZRtUcojRhULVVerGcLaNPyKOXj9q15VoHTU'
-  , access_token:         '2357203652-ome6EWChcTqBB8LdTITRXolhaWKybmmQnHlwxaV'
-  , access_token_secret:  'AHFAD68NZYTajEF3eaozlP2D5F7GL8iroSpiRnIX1nbJs'
-});
+//start tweeting loop right here
+timer();
 
-var now = new Date();
-var msUntil2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14, 0, 0, 0) - now;
-if (msUntil2 < 0) {
-    msUntil2 += 86400000; // it's after 10am, try 10am tomorrow.
+//functionality
+//implements the consistent post time
+function timer() {
+    var now = new Date();
+    var msUntil2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14, 0, 0, 0) - now;
+    if (msUntil2 < 0) {
+        msUntil2 += 86400000; // it's after 2pm, try 2pm tomorrow.
+    }
+    console.log("Time until tweet: " + msUntil2.toString() + "ms");
+
+    setTimeout(function() {
+        tweet();
+        timer();
+    }, msUntil2);
 }
-console.log("Time until tweet: " + msUntil2.toString() + "ms");
 
-setInterval(function() {
-    setTimeout(tweet(), msUntil2);
-}, 86400000)
-
+//selects category and song id to tweet then calls post
 function tweet() {
     var base = 'http://hymnal-api.herokuapp.com/';
     var categories = new Array('h/', 'ns/', 'c/');
@@ -84,6 +95,7 @@ function tweet() {
     }
 }
 
+//composes tweet and posts it
 function post(num, url, category) {
     request(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
@@ -125,6 +137,7 @@ function post(num, url, category) {
     });
 };
 
+//random number generator
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
