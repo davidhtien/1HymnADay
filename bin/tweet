@@ -23,6 +23,8 @@ function tweet() {
     var categories = new Array('h/', 'ns/', 'c/');
     var category = categories[getRandomInt(0,2)];
 
+    console.log('hello');
+
     try {
         if (category == 'h/') {
             var num = getRandomInt(1, 1348);
@@ -41,6 +43,7 @@ function tweet() {
                     console.log(url);
                     post(num, url, category);
                 } else {
+                    console.log('1');
                     console.log(error);
                 };
             });
@@ -55,11 +58,13 @@ function tweet() {
                     var url = base + category + num.toString();
                     post(num, url, category);
                 } else {
+                    console.log('2');
                     console.log(error);
                 };
             });
         }
     } catch (err) {
+        console.log('3');
         console.log(err);
     }
 }
@@ -97,10 +102,12 @@ function post(num, url, category) {
                 if (!err) {
                     console.log(reply['created_at']);
                 } else {
+                    console.log('4');
                     console.log(err);
                 }
             });
         } else {
+            console.log('5');
             console.log(error);
         };
     });
