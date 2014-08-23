@@ -111,4 +111,3 @@ function getRandomInt(min, max) {
 };
 
 tweet();
-exit();
