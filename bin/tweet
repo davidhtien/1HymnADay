@@ -1,5 +1,6 @@
 #! /app/vendor/node/bin/node
 
+var Twit = require('twit');
 var config = {};
 
 config.consumer_key         = 'H10n1pK0srAmOLpymYn0rg';
