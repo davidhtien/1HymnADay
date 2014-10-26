@@ -1,14 +1,17 @@
 var Twit = require('twit');
 var express = require("express");
 var app = express();
-request = require('request');
+var request = require('request');
+
+//import secret stuff
+var config = require('./config')
 
 //Twitter config
 var T = new Twit({
-    consumer_key:         'H10n1pK0srAmOLpymYn0rg'
-  , consumer_secret:      'fPzrJJgnZRtUcojRhULVVerGcLaNPyKOXj9q15VoHTU'
-  , access_token:         '2357203652-ome6EWChcTqBB8LdTITRXolhaWKybmmQnHlwxaV'
-  , access_token_secret:  'AHFAD68NZYTajEF3eaozlP2D5F7GL8iroSpiRnIX1nbJs'
+    consumer_key:         config.consumer_key
+  , consumer_secret:      config.consumer_secret
+  , access_token:         config.access_token
+  , access_token_secret:  config.access_token_secret
 });
 
 //server
@@ -29,11 +32,8 @@ app.listen(server_port, server_ip_address, function () {
     console.log( "Listening on " + server_ip_address + ", server_port " + server_port )
 });
 
-//start tweeting loop right here
-timer();
-
 //functionality
-//implements the consistent post time
+//implements the consistent post time, no longer needed now using heroku scheduler
 function timer() {
     var now = new Date();
     var msUntil2 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 14, 0, 0, 0) - now;
@@ -58,15 +58,15 @@ function tweet() {
         if (category == 'h/') {
             var num = getRandomInt(1, 1348);
             var url = base + category + num.toString();
-            //console.log(url);
+            console.log(url);
             post(num, url, category);
         } else if (category = 'ns/') {
             request(base + 'most_recent', function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var data = JSON.parse(body);
-                    //console.log(data);
+                    console.log(data);
                     var max = data["New Song"];
-                    //console.log(max);
+                    console.log(max);
                     var num = getRandomInt(1, max);
                     var url = base + category + num.toString();
                     console.log(url);
@@ -79,9 +79,9 @@ function tweet() {
             request(base + 'most_recent', function (error, response, body) {
                 if (!error && response.statusCode == 200) {
                     var data = JSON.parse(body);
-                    //console.log(data);
+                    console.log(data);
                     var max = data["Children"];
-                    //console.log(max);
+                    console.log(max);
                     var num = getRandomInt(1, max);
                     var url = base + category + num.toString();
                     post(num, url, category);

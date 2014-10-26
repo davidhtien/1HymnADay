@@ -1,13 +1,8 @@
-#! /app/vendor/node/bin/node
+#! /app/vendor/node/bin/node'
 
 var Twit = require('twit');
 var request = require('request');
-var config = {};
-
-config.consumer_key         = 'H10n1pK0srAmOLpymYn0rg';
-config.consumer_secret      = 'fPzrJJgnZRtUcojRhULVVerGcLaNPyKOXj9q15VoHTU';
-config.access_token         = '2357203652-ome6EWChcTqBB8LdTITRXolhaWKybmmQnHlwxaV';
-config.access_token_secret  = 'AHFAD68NZYTajEF3eaozlP2D5F7GL8iroSpiRnIX1nbJs';
+var config = require('../config');
 
 //Twitter config
 var T = new Twit({
@@ -22,8 +17,6 @@ function tweet() {
     var base = 'http://hymnal-api.herokuapp.com/';
     var categories = new Array('h/', 'ns/', 'c/');
     var category = categories[getRandomInt(0,2)];
-
-    console.log('hello');
 
     try {
         if (category == 'h/') {
